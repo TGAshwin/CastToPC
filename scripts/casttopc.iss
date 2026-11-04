@@ -1,5 +1,4 @@
-; Cast to PC installer (Inno Setup 6)
-; iscc /DCrtDir=<VS>\VC\Redist\MSVC\<ver>\x64\Microsoft.VC143.CRT scripts\casttopc.iss
+; Cast to PC installer (Inno Setup 6). Run scripts\package.ps1 to stage files.
 #define MyAppName "Cast to PC"
 #ifndef MyAppVersion
   #define MyAppVersion "1.0.0"
@@ -7,12 +6,7 @@
 #define MyAppPublisher "Cast to PC contributors"
 
 #define MyAppExeName "CastToPC.exe"
-#ifndef BuildDir
-  #define BuildDir "..\build\Release"
-#endif
-#ifndef CrtDir
-  #error Pass /DCrtDir=<VS>\VC\Redist\MSVC\<ver>\x64\Microsoft.VC143.CRT
-#endif
+#define PackageDir "..\out\package"
 
 [Setup]
 AppId={{CBE6DA65-1292-4348-AE42-EBC00FF7CDF1}
@@ -39,14 +33,8 @@ CloseApplications=yes
 
 [Files]
 ; Only the DLLs CastToPC.exe imports, plus the app-local Visual C++ runtime
-Source: "{#BuildDir}\CastToPC.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#BuildDir}\avcodec-*.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#BuildDir}\avutil-*.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#BuildDir}\swresample-*.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#BuildDir}\libcrypto-*-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#CrtDir}\msvcp140.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#CrtDir}\vcruntime140.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#CrtDir}\vcruntime140_1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#PackageDir}\CastToPC.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#PackageDir}\*.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\NOTICE"; DestDir: "{app}"; Flags: ignoreversion
 
@@ -56,7 +44,7 @@ Name: "{autodesktop}\Cast to PC"; Filename: "{app}\{#MyAppExeName}"; Tasks: desk
 
 [Tasks]
 Name: "desktopicon"; Description: "Create a desktop shortcut"; GroupDescription: "Additional icons:"
-Name: "firewall"; Description: "Allow Cast to PC through Windows Firewall"; GroupDescription: "Network:"
+Name: "firewall"; Description: "Allow connections on private Wi-Fi networks (recommended)"; GroupDescription: "Network:"
 
 [Run]
 Filename: "netsh"; Parameters: "advfirewall firewall delete rule name=""Cast to PC"""; Flags: runhidden; Tasks: firewall

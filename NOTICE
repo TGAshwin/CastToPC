@@ -1,0 +1,25 @@
+Cast to PC
+Based on AirScreen by donerfolk and contributors.
+Copyright notices and GPL-3.0 terms are preserved in LICENSE.
+
+This program includes code from:
+
+UxPlay (GPLv3)
+  https://github.com/FDH2/UxPlay
+  derived from RPiPlay, AirplayServer, shairplay, and playfair
+
+playfair (GPLv3)
+  FairPlay-SAP key unwrap used by AirPlay mirroring
+
+llhttp (MIT)
+  third_party/uxplay/llhttp/LICENSE-MIT
+
+libplist (LGPL-2.1)
+  https://github.com/libimobiledevice/libplist
+  third_party/libplist/COPYING.LESSER
+
+FFmpeg (GPL, matching this application)
+  https://ffmpeg.org/
+
+OpenSSL 3 (Apache-2.0)
+  https://www.openssl.org/
